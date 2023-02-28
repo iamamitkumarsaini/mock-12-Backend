@@ -1,5 +1,5 @@
 const express = require("express");
-const { PostModel } = require("../Model/post.model");
+const { PostModel } = require("../Model/Post.model");
 require("dotenv").config();
 
 const postRoutes = express.Router();
