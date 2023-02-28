@@ -1,12 +1,8 @@
 const express = require("express");
-const { connection } = require("./config/db");
+const { postRoutes } = require("./Routes/Post.Routes");
 require("dotenv").config();
 const cors = require("cors");
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const { userRoutes } = require("./Routes/user.Routes");
-const { profileRoutes } = require("./Routes/profile.Routes");
-const { authentication } = require("./Middlewares/auth.middleware");
+const { connection } = require("./config/db");
 
 
 
@@ -19,20 +15,11 @@ app.use(cors({
 app.use(express.json());
 
 app.get("/", (req,res) => {
-    res.send({"Message":"welcome to User Profile Page"})
+    res.send({"Message":"welcome to miniolx.com"})
 })
 
 
-app.use("/",userRoutes);
-
-
-
-
-
-
-app.use(authentication)
-app.use("/", profileRoutes)
-
+app.use("/posts",postRoutes)
 
 
 app.listen(process.env.port, async() => {
@@ -42,9 +29,7 @@ app.listen(process.env.port, async() => {
     } 
     
     catch (err) {
-        console.log("Connection to DB Failed");
-        console.log(err);
+        console.log("Connection to DB Failed",err);
+        res.send({"Message":"Connection to Network Failed"});
     }
-
-    console.log(`running on port ${process.env.port}`)
 });
